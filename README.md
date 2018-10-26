@@ -4,7 +4,7 @@
 
 # GoKEV-cisco-config-DWAB
 This project is an Ansible role to configure Cisco switches.  Some dude with a blog (DWAB) did it like this in individual playbooks, so we grabbed his work and adapted it into roles.
-
+DWAB:  https://enableconfig.wordpress.com/
 
 ## Example Playbooks
 Here's an example of how you could launch this role
