@@ -1,38 +1,75 @@
-Role Name
-=========
+[![GoKEV](http://GoKEV.com/GoKEV200.png)](http://GoKEV.com/)
 
-A brief description of the role goes here.
+<div style="position: absolute; top: 40px; left: 200px;">
 
-Requirements
-------------
+# GoKEV-cisco-config-DWAB
+This project is an Ansible role to configure Cisco switches.  Some dude with a blog (DWAB) did it like this in individual playbooks, so we grabbed his work and adapted it into roles.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
-Role Variables
---------------
+## Example Playbooks
+Here's an example of how you could launch this role
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-Dependencies
-------------
+<pre>---
+----
+- name: Config with cisco
+  hosts: all
+  gather_facts: no
+  connection: local
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+  roles:
+  - GoKEV.cisco-config-DWAB
 
-Example Playbook
-----------------
+</pre>
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## With a requirements.yml that looks as such:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+<pre>
+---
+- name: GoKEV.cisco-config-DWAB
+  version: master
+  src: https://github.com/GoKEV/GoKEV-cisco-config-DWAB.git
+</pre>
 
-License
--------
 
-BSD
+## And variables as such:
 
-Author Information
-------------------
+<pre>
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+---
+# defaults file for cisco
+## Do not declare VLAN1 here because it already exists as default.
+## That will mess with the idempotent nature and report change
+vlans:
+  - vlan_id: 10
+    vlan_name: VLAN1
+  - vlan_id: 20
+    vlan_name: VLAN2
+
+
+access_ports:
+  - interface: GigabitEthernet0/1
+    vlan: 10
+    description: Demo Access Port
+trunk_ports:
+  - interface: GigabitEthernet0/2
+    vlans_allowed: 10,20
+    native_vlan: 1
+    description: Demo Trunk Port
+
+</pre>
+
+
+## Troubleshooting & Improvements
+
+- Not enough testing yet
+
+## Notes
+
+  - Not enough testing yet
+
+## Author
+
+This project was created in 2018 by [Kevin Holmes](http://GoKEV.com/).
+
+
